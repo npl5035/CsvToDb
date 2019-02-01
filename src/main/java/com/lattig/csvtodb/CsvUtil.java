@@ -1,6 +1,9 @@
 package com.lattig.csvtodb;
 
-import com.opencsv.*;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriterBuilder;
+import com.opencsv.ICSVWriter;
 
 import java.io.File;
 import java.io.FileReader;
@@ -35,13 +38,12 @@ public class CsvUtil {
         List<String[]> list = new ArrayList<>();
         try {
             FileReader reader = new FileReader(csvFile);
-            CSVParser parser = new CSVParserBuilder()
-                    .withSeparator(',')
-                    .withIgnoreQuotations(true)
-                    .build();
+            // CSVParser parser = new CSVParserBuilder()
+            //         .withSeparator(',')
+            //         .withIgnoreQuotations(true)
+            //         .build();
             CSVReader csvReader = new CSVReaderBuilder(reader)
                     .withSkipLines(1)
-                    .withCSVParser(parser)
                     .build();
 
             String[] line;
@@ -113,7 +115,13 @@ public class CsvUtil {
         File file = new File(newCsvFile + fileName);
         try {
             FileWriter outputFile = new FileWriter(file);
-            CSVWriter writer = new CSVWriter(outputFile);
+            //CSVParser parser = new CSVParserBuilder()
+            //        .withSeparator(',')
+            //        .withIgnoreQuotations(false)
+            //        .build();
+            ICSVWriter writer = new CSVWriterBuilder(outputFile)
+                    //    .withParser(parser)
+                    .build();
             String[] header = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
             writer.writeNext(header);
             for (String[] array : stringArray) {

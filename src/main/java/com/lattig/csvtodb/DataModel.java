@@ -1,9 +1,6 @@
 package com.lattig.csvtodb;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -11,7 +8,10 @@ import java.io.Serializable;
 public class DataModel implements Serializable {
 
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String H;
+    private String I;
     private String A;
     private String B;
     private String C;
@@ -19,8 +19,22 @@ public class DataModel implements Serializable {
     private String E;
     private String F;
     private String G;
-    private boolean H;
-    private boolean I;
+
+    public DataModel() {
+    }
+
+    public DataModel(String a, String b, String c, String d, String e, String f, String g, String h, String i, String j) {
+        this.A = a;
+        this.B = b;
+        this.C = c;
+        this.D = d;
+        this.E = e;
+        this.F = f;
+        this.G = g;
+        this.H = h;
+        this.I = i;
+        this.J = j;
+    }
     private String J;
 
     @Column(name = "A")
@@ -87,20 +101,20 @@ public class DataModel implements Serializable {
     }
 
     @Column(name = "H")
-    public boolean isH() {
+    public String getH() {
         return H;
     }
 
-    public void setH(boolean h) {
+    public void setH(String h) {
         H = h;
     }
 
     @Column(name = "I")
-    public boolean isI() {
+    public String getI() {
         return I;
     }
 
-    public void setI(boolean i) {
+    public void setI(String i) {
         I = i;
     }
 
@@ -113,11 +127,11 @@ public class DataModel implements Serializable {
         J = j;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 }
