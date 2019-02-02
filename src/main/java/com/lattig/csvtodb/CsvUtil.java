@@ -18,18 +18,18 @@ import java.util.List;
 public class CsvUtil {
 
     private String csvFile;
-    private String newCsvFile;
+    private String newCsvPath;
     private boolean isEmpty;
     private String[] missingDataEntry;
     private List<String[]> badEntries = new ArrayList<>();
     private List<String[]> goodEntries = new ArrayList<>();
 
     public CsvUtil() {
-        csvFile = "D:/PSU files/Independent Projects/MS3 coding challenge/ms3TestData.csv";
+        //setCsvFile("D:/PSU files/Independent Projects/MS3 coding challenge/ms3TestData.csv");
     }
 
     public CsvUtil(String csvFile) {
-        this.csvFile = csvFile;
+        this.setCsvFile(csvFile);
     }
 
 
@@ -109,10 +109,10 @@ public class CsvUtil {
     }
 
     public void writeCSV(List<String[]> stringArray) {
-        newCsvFile = "C:/Users/Nate/Documents/NetBeansProjects/CsvToDb/";
+        //newCsvFile = "C:/Users/Nate/Documents/NetBeansProjects/CsvToDb/";
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("hhmmssddmmyyyy");
-        String fileName = "bad-data-" + LocalDateTime.now().format(dateTimeFormatter) + ".csv";
-        File file = new File(newCsvFile + fileName);
+        String fileName = "\\bad-data-" + LocalDateTime.now().format(dateTimeFormatter) + ".csv";
+        File file = new File(newCsvPath + fileName);
         try {
             FileWriter outputFile = new FileWriter(file);
             //CSVParser parser = new CSVParserBuilder()
@@ -134,9 +134,25 @@ public class CsvUtil {
 
     }
 
-
     public List<String[]> getGoodEntries() {
         return goodEntries;
     }
 
+    public String getCsvFile() {
+        return csvFile;
+    }
+
+    public void setCsvFile(String csvFile) {
+        this.csvFile = csvFile;
+        System.out.println(this.csvFile);
+    }
+
+    public String getnewCsvPath() {
+        return newCsvPath;
+    }
+
+    public void setnewCsvPath(String newCsvPath) {
+        this.newCsvPath = newCsvPath;
+        System.out.println(this.newCsvPath);
+    }
 }

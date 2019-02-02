@@ -15,9 +15,13 @@ public class CsvToDb {
 
     public static void main(String[] args) {
 
+        MainMenuView menuUI = new MainMenuView();
         CsvUtil csvUtil = new CsvUtil();
-        csvUtil.readCsv();
-        createData(csvUtil.getGoodEntries());
+        MainMenuCtrl menuCtrl = new MainMenuCtrl(menuUI, csvUtil);
+
+        //CsvUtil csvUtil = new CsvUtil();
+        //csvUtil.readCsv();
+        //createData(csvUtil.getGoodEntries());
         //connect();
     }
 
