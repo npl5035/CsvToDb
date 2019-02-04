@@ -3,72 +3,93 @@ package com.lattig.csvtodb;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.logging.FileHandler;
 
-public class MainMenuCtrl implements ActionListener {
+
+public class MainMenuCtrl {
 
     CsvUtil csvUtil;
     private MainMenuView menuView;
+    DatabaseCtrl db;
 
-    public MainMenuCtrl(MainMenuView menuView, CsvUtil csvUtil) {
-
+    public MainMenuCtrl(MainMenuView menuView) {
         this.menuView = menuView;
-        menuView.getButton1().addActionListener(this);
-        menuView.getButton2().addActionListener(this);
-        menuView.getButton3().addActionListener(this);
+        CsvUtil csvUtil = new CsvUtil();
         this.csvUtil = csvUtil;
-
-
+        db = new DatabaseCtrl();
+        FileHandler handler;
     }
 
+    public void testStatement() {
+        System.out.println("CSV Button clicked");
+    }
 
-    /**
-     * Invoked when an action occurs.
-     *
-     * @param e
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        String com = e.getActionCommand();
+    public void selectCsvButtonActionPerformed() {//GEN-FIRST:event_selectCsvButtonActionPerformed
         String csvFile;
-        String csvPath;
+        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        j.setAcceptAllFileFilterUsed(false);
+        j.setDialogTitle("select .csv file");
+        FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .csv files", "csv");
+        j.addChoosableFileFilter(restrict);
 
-        if (com.equals("open file")) {
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setAcceptAllFileFilterUsed(false);
-            j.setDialogTitle("select .csv file");
-            FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .csv files", "csv");
-            j.addChoosableFileFilter(restrict);
-
-            int r = j.showOpenDialog(null);
-            if (r == JFileChooser.APPROVE_OPTION) {
-                menuView.getLabel1().setText(j.getSelectedFile().getAbsolutePath());
-                csvFile = menuView.getLabel1().getText();
-                csvUtil.setCsvFile(csvFile);
-            } else {
-                menuView.getLabel1().setText("operation cancelled!");
-            }
-        } else if (com.equals("select path")) {
-
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int r = j.showOpenDialog(null);
-            if (r == JFileChooser.APPROVE_OPTION) {
-                menuView.getLabel2().setText(j.getSelectedFile().getAbsolutePath());
-                csvPath = menuView.getLabel2().getText();
-                csvUtil.setnewCsvPath(csvPath);
-            } else {
-                menuView.getLabel2().setText("operation cancelled!");
-            }
-        } else if (com.equals("load csv file")) {
-            System.out.println("load button pressed");
-            if (csvUtil.getCsvFile() == null || csvUtil.getnewCsvPath() == null) {
-                menuView.getLabel3().setText("Please choose a .csv file and a file output folder");
-            } else {
-                csvUtil.readCsv();
-            }
+        int r = j.showOpenDialog(null);
+        if (r == JFileChooser.APPROVE_OPTION) {
+            csvFile = j.getSelectedFile().getAbsolutePath();
+            menuView.getCsvFileLabel().setText(csvFile);
+            csvUtil.setCsvFile(csvFile);
+        } else {
+            menuView.getCsvFileLabel().setText("operation cancelled");
         }
+    }//GEN-LAST:event_selectCsvButtonActionPerformed
+
+    public void selectOutputButtonActionPerformed() {//GEN-FIRST:event_selectOutputButtonActionPerformed
+        String csvPath;
+        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int r = j.showOpenDialog(null);
+        if (r == JFileChooser.APPROVE_OPTION) {
+            csvPath = j.getSelectedFile().getAbsolutePath();
+            menuView.getOutputLabel().setText(csvPath);
+            csvUtil.setnewCsvPath(csvPath);
+        } else {
+            menuView.getOutputLabel().setText("operation cancelled!");
+        }
+    }//GEN-LAST:event_selectOutputButtonActionPerformed
+
+    public void loadButtonActionPerformed() {
+        System.out.println("load button pressed");
+        csvUtil.readCsv();
+        db.createData(csvUtil.getGoodEntries());
+    }
+
+    public void closeButtonActionPerformed() {//GEN-FIRST:event_closeButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_closeButtonActionPerformed
+
+    public void databaseButtonActionPerformed() {
+        //List<DataModel> data;
+        db.viewData();
+        //DataModel test[] = new DataModel[data.size()];
+        //test = data.toArray(test);
+        //for (int i = 0; i < test.length; i++){
+//
+        //    System.out.println(test[i].getA() + " : " +
+        //    test[i].getB()+ " : " +
+        //    test[i].getC()+ " : " +
+        //    test[i].getD()+ " : " +
+        //    test[i].getE()+ " : " +
+        //    test[i].getF()+ " : " +
+        //    test[i].getG()+ " : " +
+        //    test[i].getH()+ " : " +
+        //    test[i].getI()+ " : " +
+        //    test[i].getJ());
+//
+        //    //System.out.print(
+        //    //        test[i].toString()
+        //    //
+        //    //);
+        //}
+
+
     }
 }

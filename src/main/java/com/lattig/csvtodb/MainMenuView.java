@@ -1,237 +1,262 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.lattig.csvtodb;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static javax.swing.GroupLayout.Alignment.*;
+import static javax.swing.GroupLayout.DEFAULT_SIZE;
+import static javax.swing.GroupLayout.PREFERRED_SIZE;
+import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
+
+/**
+ * @author Nate
+ */
 public class MainMenuView extends JFrame {
 
-    private JFrame frame;
-    private JPanel panel;
-    private JLabel label1;
-    private JLabel label2;
-    private JLabel label3;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-
+    /**
+     * Creates new form MainMenu2
+     *
+     * @param menuCtrl
+     */
+    MainMenuCtrl menuCtrl;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JButton closeButton;
+    private JLabel csvFileLabel;
+    private JButton databaseButton;
+    private JPanel jPanel1;
+    private JSeparator jSeparator1;
+    private JButton loadButton;
+    private JLabel outputLabel;
+    private JButton selectCsvButton;
+    private JButton selectOutputButton;
+    private JLabel titleLabel;
 
     public MainMenuView() {
-        createUI();
-    }
 
-    public void createUI() {
-        frame = new JFrame("CsV to Db");
-        panel = new JPanel();
-        frame.setLayout(new BorderLayout());
-        panel.setLayout(new GridBagLayout());
-
-        frame.setSize(500, 500);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        createComponents();
-
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
-    }
-
-    private void createComponents() {
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-
-        //**************** Choose File to Load setup ****************
-
-        setButton1(new JButton("open file"));
-        //getButton1().addActionListener(f1);
-        c.gridx = 0;
-        c.gridy = 0;
-        panel.add(getButton1(), c);
-        setLabel1(new JLabel("no file selected"));
-        c.gridx = 1;
-        c.gridy = 0;
-        panel.add(getLabel1(), c);
-
-        //**************** Choose File Path to Save setup ****************
-
-        setButton2(new JButton("select path"));
-        //getButton2().addActionListener(f1);
-        c.gridx = 0;
-        c.gridy = 1;
-        panel.add(getButton2(), c);
-        setLabel2(new JLabel("no path selected"));
-        c.gridx = 1;
-        c.gridy = 1;
-        panel.add(getLabel2(), c);
-
-        //**************** Load CSV setup ****************
-
-        setButton3(new JButton("load csv file"));
-        //getButton2().addActionListener(f1);
-        c.gridx = 0;
-        c.gridy = 2;
-        panel.add(getButton3(), c);
-        setLabel3(new JLabel(""));
-        c.gridx = 1;
-        c.gridy = 2;
-        panel.add(getLabel3(), c);
-
+        initComponents();
 
     }
-
-    public JLabel getLabel1() {
-        return label1;
-    }
-
-    public void setLabel1(JLabel label1) {
-        this.label1 = label1;
-    }
-
-    public JLabel getLabel2() {
-        return label2;
-    }
-
-    public void setLabel2(JLabel label2) {
-        this.label2 = label2;
-    }
-
-    public JButton getButton1() {
-        return button1;
-    }
-
-    public void setButton1(JButton button1) {
-        this.button1 = button1;
-    }
-
-    public JButton getButton2() {
-        return button2;
-    }
-
-    public void setButton2(JButton button2) {
-        this.button2 = button2;
-    }
-
-    public JLabel getLabel3() {
-        return label3;
-    }
-
-    public void setLabel3(JLabel label3) {
-        this.label3 = label3;
-    }
-
-    public JButton getButton3() {
-        return button3;
-    }
-
-    public void setButton3(JButton button3) {
-        this.button3 = button3;
-    }
-
 
     /**
-     * Invoked when an action occurs.
-     *
-     * @param e the event to be processed
+     * @param args the command line arguments
      */
-    /*
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String com = e.getActionCommand();
-
-        if(com.equals("open file")) {
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setAcceptAllFileFilterUsed(false);
-            j.setDialogTitle("select .csv file");
-            FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .csv files", "csv");
-            j.addChoosableFileFilter(restrict);
-
-            int r = j.showOpenDialog(null);
-            if (r == JFileChooser.APPROVE_OPTION) {
-                label1.setText(j.getSelectedFile().getAbsolutePath());
-            } else {
-                label1.setText("operation canclled!");
-            }
-        }else{
-
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int r = j.showOpenDialog(null);
-            if (r == JFileChooser.APPROVE_OPTION) {
-                label2.setText(j.getSelectedFile().getAbsolutePath());
-            } else {
-                label2.setText("operation canclled!");
-            }
-
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //for (UIManager.LookAndFeelInfo info : getInstalledLookAndFeels()) {
+            //    if ("Nimbus".equals(info.getName())) {
+            //        setLookAndFeel(info.getClassName());
+            //        break;
+            //    }
+            //}
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
 
-    }*/
+        /* Create and display the form */
+        //invokeLater(() -> new MainMenuView(menuCtrl).setVisible(true));
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        this.menuCtrl = new MainMenuCtrl(this);
+        jPanel1 = new JPanel();
+        titleLabel = new JLabel();
+        setSelectCsvButton(new JButton());
+        setCsvFileLabel(new JLabel());
+        setSelectOutputButton(new JButton());
+        setOutputLabel(new JLabel());
+        setCloseButton(new JButton());
+        setLoadButton(new JButton());
+        setDatabaseButton(new JButton());
+        jSeparator1 = new JSeparator();
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(500, 500));
+
+        titleLabel.setFont(new Font("Dialog", 0, 18)); // NOI18N
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setText("CSV To DB");
+
+        selectCsvButton.setText("Select CSV File");
+        selectCsvButton.setPreferredSize(new Dimension(100, 25));
+        selectCsvButton.addActionListener(e -> menuCtrl.selectCsvButtonActionPerformed());
 
 
-//    private JFrame f;
-//    private JPanel p;
-//    private JFileChooser j;
-//
-//    private JButton addFoodBtn, addMoodBtn, viewProfileBtn, editEntriesBtn, viewRecommendationsBtn;
-//
-//    /**
-//     * default constructor for MainMenuUI
-//     */
-//    public FileChooserUI(){
-//        f = new JFrame();
-//        p = new JPanel();
-//        f.setLayout(new BorderLayout());
-//        p.setLayout(new GridBagLayout());
-//
-//        f.setTitle("FoodMood");
-//        f.setSize(1000, 1000); // default size is 0,0
-//        //f.setLocation(300, 300); // default is 0,0 (top left corner)
-//        f.setLocationRelativeTo(null);
-//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        createComponents();
-//
-//        f.add(p, BorderLayout.CENTER);
-//        f.setVisible(true);
-//
-//    }
-//
-//    private void createComponents() {
-//        GridBagConstraints c = new GridBagConstraints();
-//        c.fill = GridBagConstraints.BOTH;
-//
-//        c.gridx = 0;
-//        c.gridy = 0;
-//        j = new JFileChooser();
-//        j.showSaveDialog(null);
-//        p.add(j, c);
-//
-//    }
-//
-//    public JButton getAddFoodBtn() {
-//        return addFoodBtn;
-//    }
-//
-//    public JButton getAddMoodBtn() {
-//        return addMoodBtn;
-//    }
-//
-//    public JButton getViewProfileBtn() {
-//        return viewProfileBtn;
-//    }
-//
-//    public JButton getEditEntriesBtn() {
-//        return editEntriesBtn;
-//    }
-//
-////    public JButton getViewNotificationsBtn() {
-////       return viewNotificationsBtn;
-////    }
-//
-//    public JButton getViewRecommendationsBtn() {
-//        return viewRecommendationsBtn;
-//    }
-//
-//    public JFrame getF() {
-//        return f;
-//    }
+        csvFileLabel.setText("CSV File Path");
+
+        selectOutputButton.setText("Select Output Directory");
+        selectOutputButton.setPreferredSize(new Dimension(100, 25));
+        selectOutputButton.addActionListener(e -> menuCtrl.selectOutputButtonActionPerformed());
+
+        outputLabel.setText("Directory Path");
+
+        closeButton.setText("Close");
+        closeButton.addActionListener(evt -> menuCtrl.closeButtonActionPerformed());
+
+        loadButton.setText("Load File");
+        loadButton.setPreferredSize(new Dimension(100, 25));
+        loadButton.addActionListener(e -> menuCtrl.loadButtonActionPerformed());
+
+        databaseButton.setText("View Database Contents");
+        databaseButton.addActionListener(e -> menuCtrl.databaseButtonActionPerformed());
+
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(LEADING)
+                        .addComponent(titleLabel, TRAILING, DEFAULT_SIZE, DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(TRAILING)
+                                        .addComponent(jSeparator1)
+                                        .addComponent(getCsvFileLabel(), LEADING, DEFAULT_SIZE, DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(getOutputLabel(), LEADING, DEFAULT_SIZE, DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(getDatabaseButton())
+                                                .addPreferredGap(RELATED, 236, Short.MAX_VALUE)
+                                                .addComponent(getCloseButton()))
+                                        .addGroup(LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(TRAILING)
+                                                        .addComponent(getSelectOutputButton(), LEADING, PREFERRED_SIZE, 150, PREFERRED_SIZE)
+                                                        .addComponent(getLoadButton(), LEADING, PREFERRED_SIZE, 151, PREFERRED_SIZE)
+                                                        .addComponent(getSelectCsvButton(), LEADING, PREFERRED_SIZE, 150, PREFERRED_SIZE))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(titleLabel, PREFERRED_SIZE, 46, PREFERRED_SIZE)
+                                .addPreferredGap(RELATED)
+                                .addComponent(jSeparator1, PREFERRED_SIZE, 10, PREFERRED_SIZE)
+                                .addPreferredGap(RELATED, 87, Short.MAX_VALUE)
+                                .addComponent(getSelectCsvButton(), PREFERRED_SIZE, DEFAULT_SIZE, PREFERRED_SIZE)
+                                .addPreferredGap(RELATED)
+                                .addComponent(getCsvFileLabel(), PREFERRED_SIZE, 25, PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(getSelectOutputButton(), PREFERRED_SIZE, DEFAULT_SIZE, PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(getOutputLabel(), PREFERRED_SIZE, 23, PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(getLoadButton(), PREFERRED_SIZE, DEFAULT_SIZE, PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
+                                .addGroup(jPanel1Layout.createParallelGroup(BASELINE)
+                                        .addComponent(getCloseButton())
+                                        .addComponent(getDatabaseButton()))
+                                .addContainerGap())
+        );
+
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, DEFAULT_SIZE, DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(LEADING)
+                        .addGroup(TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, DEFAULT_SIZE, DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+
+
+        pack();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        setVisible(true);
+    }// </editor-fold>//GEN-END:initComponents
+
+    public JButton getCloseButton() {
+        return closeButton;
+    }
+
+    public void setCloseButton(JButton closeButton) {
+        this.closeButton = closeButton;
+    }
+
+    public JLabel getCsvFileLabel() {
+        return csvFileLabel;
+    }
+
+    public void setCsvFileLabel(JLabel csvFileLabel) {
+        this.csvFileLabel = csvFileLabel;
+    }
+
+    public JButton getDatabaseButton() {
+        return databaseButton;
+    }
+
+    public void setDatabaseButton(JButton databaseButton) {
+        this.databaseButton = databaseButton;
+    }
+
+    public JButton getLoadButton() {
+        return loadButton;
+    }
+
+    public void setLoadButton(JButton loadButton) {
+        this.loadButton = loadButton;
+    }
+
+    public JLabel getOutputLabel() {
+        return outputLabel;
+    }
+
+    public void setOutputLabel(JLabel outputLabel) {
+        this.outputLabel = outputLabel;
+    }
+
+    public JButton getSelectCsvButton() {
+        return selectCsvButton;
+    }
+
+    public void setSelectCsvButton(JButton selectCsvButton) {
+        this.selectCsvButton = selectCsvButton;
+    }
+
+    public JButton getSelectOutputButton() {
+        return selectOutputButton;
+    }
+
+    public void setSelectOutputButton(JButton selectOutputButton) {
+        this.selectOutputButton = selectOutputButton;
+    }
+
 }

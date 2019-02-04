@@ -14,8 +14,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+
+import static com.lattig.csvtodb.CsvToDb.logger;
 
 public class CsvUtil {
+
 
     private String csvFile;
     private String newCsvPath;
@@ -34,7 +38,7 @@ public class CsvUtil {
 
 
     public void readCsv() {
-
+        long entryCount = 0;
         List<String[]> list = new ArrayList<>();
         try {
             FileReader reader = new FileReader(csvFile);
@@ -49,7 +53,9 @@ public class CsvUtil {
             String[] line;
             while ((line = csvReader.readNext()) != null) {
                 list.add(line);
+                entryCount = entryCount + 1;
             }
+            logger.log(Level.INFO, "Records Received: " + entryCount);
             reader.close();
             csvReader.close();
 
@@ -62,20 +68,27 @@ public class CsvUtil {
     }
 
     private void filterFileEntries(List<String[]> list) {
-
+        long badCounter = 0;
+        long goodCounter = 0;
         for (String[] readLine : list) {
+
 
             if (nullCheck(readLine)) {
                 missingDataEntry = readLine.clone();
                 createBadEntries(missingDataEntry);
+                badCounter = badCounter + 1;
+
 
             } else {
                 String[] transferData = readLine.clone();
                 createGoodEntries(transferData);
+                goodCounter = goodCounter + 1;
+
             }
             System.out.println("************************");
         }
-
+        logger.log(Level.INFO, "Records Failed: " + badCounter);
+        logger.log(Level.INFO, "Records Successful: " + goodCounter);
     }
 
     private boolean nullCheck(String[] readEntry) {
