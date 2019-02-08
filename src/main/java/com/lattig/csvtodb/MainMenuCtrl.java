@@ -3,27 +3,25 @@ package com.lattig.csvtodb;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import java.util.logging.FileHandler;
 
 
 public class MainMenuCtrl {
 
-    CsvUtil csvUtil;
+    private CsvUtil csvUtil;
     private MainMenuView menuView;
-    DatabaseCtrl db;
+    private DatabaseCtrl db;
 
     public MainMenuCtrl(MainMenuView menuView) {
         this.menuView = menuView;
         CsvUtil csvUtil = new CsvUtil();
         this.csvUtil = csvUtil;
         db = new DatabaseCtrl();
-        FileHandler handler;
     }
 
-    public void testStatement() {
-        System.out.println("CSV Button clicked");
-    }
-
+    /**
+     * When the select csv file button is pressed this method will bring up a file chooser to help find the desired file
+     * and then set the file path once a file is chosen
+     */
     public void selectCsvButtonActionPerformed() {//GEN-FIRST:event_selectCsvButtonActionPerformed
         String csvFile;
         JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -31,7 +29,6 @@ public class MainMenuCtrl {
         j.setDialogTitle("select .csv file");
         FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .csv files", "csv");
         j.addChoosableFileFilter(restrict);
-
         int r = j.showOpenDialog(null);
         if (r == JFileChooser.APPROVE_OPTION) {
             csvFile = j.getSelectedFile().getAbsolutePath();
@@ -42,6 +39,10 @@ public class MainMenuCtrl {
         }
     }//GEN-LAST:event_selectCsvButtonActionPerformed
 
+    /**
+     * When the select output directory button is pressed this method will bring up a file chooser to help find the
+     * desired path and then set the file path once one is chosen
+     */
     public void selectOutputButtonActionPerformed() {//GEN-FIRST:event_selectOutputButtonActionPerformed
         String csvPath;
         JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -56,40 +57,28 @@ public class MainMenuCtrl {
         }
     }//GEN-LAST:event_selectOutputButtonActionPerformed
 
+    /**
+     * When the load file button is pressed this method will call the CsvUtil method readCsv to read in the selected
+     * .csv file and then passes the populated good entry list, via the getGoodEntries method, into the DatabaseCtrl
+     * via is createData method
+     */
     public void loadButtonActionPerformed() {
-        System.out.println("load button pressed");
         csvUtil.readCsv();
         db.createData(csvUtil.getGoodEntries());
     }
 
+    /**
+     * When the close button is pressed this method will exit the entire program
+     */
     public void closeButtonActionPerformed() {//GEN-FIRST:event_closeButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_closeButtonActionPerformed
 
+    /**
+     *  When the view database content button is pressed the DatabaseCtrl method viewData is called and a DatabaseView
+     *  is generated and populated
+     */
     public void databaseButtonActionPerformed() {
-        //List<DataModel> data;
         db.viewData();
-        //DataModel test[] = new DataModel[data.size()];
-        //test = data.toArray(test);
-        //for (int i = 0; i < test.length; i++){
-//
-        //    System.out.println(test[i].getA() + " : " +
-        //    test[i].getB()+ " : " +
-        //    test[i].getC()+ " : " +
-        //    test[i].getD()+ " : " +
-        //    test[i].getE()+ " : " +
-        //    test[i].getF()+ " : " +
-        //    test[i].getG()+ " : " +
-        //    test[i].getH()+ " : " +
-        //    test[i].getI()+ " : " +
-        //    test[i].getJ());
-//
-        //    //System.out.print(
-        //    //        test[i].toString()
-        //    //
-        //    //);
-        //}
-
-
     }
 }

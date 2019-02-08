@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -29,23 +28,18 @@ public class CsvUtil {
     private List<String[]> goodEntries = new ArrayList<>();
 
     public CsvUtil() {
-        //setCsvFile("D:/PSU files/Independent Projects/MS3 coding challenge/ms3TestData.csv");
-    }
 
-    public CsvUtil(String csvFile) {
-        this.setCsvFile(csvFile);
     }
 
 
+    /**
+     * Takes in .csv file and separates each row into a String array and adds that array into a list of String Arrays
+     */
     public void readCsv() {
         long entryCount = 0;
         List<String[]> list = new ArrayList<>();
         try {
             FileReader reader = new FileReader(csvFile);
-            // CSVParser parser = new CSVParserBuilder()
-            //         .withSeparator(',')
-            //         .withIgnoreQuotations(true)
-            //         .build();
             CSVReader csvReader = new CSVReaderBuilder(reader)
                     .withSkipLines(1)
                     .build();
@@ -67,35 +61,39 @@ public class CsvUtil {
 
     }
 
+    /**
+     * filters a list of String arrays, based on if the String array has any empty elements, to be processed into a new
+     * list of bad entries or a list of good entries
+     *
+     * @param list of String arrays
+     */
     private void filterFileEntries(List<String[]> list) {
         long badCounter = 0;
         long goodCounter = 0;
         for (String[] readLine : list) {
-
-
             if (nullCheck(readLine)) {
                 missingDataEntry = readLine.clone();
                 createBadEntries(missingDataEntry);
                 badCounter = badCounter + 1;
-
-
             } else {
                 String[] transferData = readLine.clone();
                 createGoodEntries(transferData);
                 goodCounter = goodCounter + 1;
-
             }
-            System.out.println("************************");
         }
         logger.log(Level.INFO, "Records Failed: " + badCounter);
         logger.log(Level.INFO, "Records Successful: " + goodCounter);
     }
 
+    /**
+     * checks String array for empty or null elements
+     *
+     * @param readEntry String array to be checked
+     * @return whether the check passed or failed
+     */
     private boolean nullCheck(String[] readEntry) {
-
         for (String s : readEntry) {
             if (s == null || s.isEmpty()) {
-                //System.out.println("Missing Data!!");
                 isEmpty = true;
                 break;
             } else {
@@ -105,36 +103,37 @@ public class CsvUtil {
         return isEmpty;
     }
 
+    /**
+     * takes in a String array and adds it to a list of bad String arrays, then writes that list to a .csv file
+     *
+     * @param missingData String array containing missing elements
+     */
     private void createBadEntries(String[] missingData) {
-        System.out.println("New bad entry added");
         badEntries.add(missingData);
-        System.out.println("Bad Entry: " + Arrays.toString(missingData));
         writeCSV(badEntries);
     }
 
+    /**
+     * takes in a String array and adds it to a list of good String arrays
+     *
+     * @param goodData
+     */
     private void createGoodEntries(String[] goodData) {
-
-        System.out.println("New good entry added");
-
         getGoodEntries().add(goodData);
-        System.out.println("Good Entry: " + Arrays.toString(goodData));
 
     }
 
+    /**
+     * writes list of String arrays containing bad data into a new .csv file
+     * @param stringArray list of String arrays containing bad data entries
+     */
     public void writeCSV(List<String[]> stringArray) {
-        //newCsvFile = "C:/Users/Nate/Documents/NetBeansProjects/CsvToDb/";
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("hhmmssddmmyyyy");
         String fileName = "\\bad-data-" + LocalDateTime.now().format(dateTimeFormatter) + ".csv";
         File file = new File(newCsvPath + fileName);
         try {
             FileWriter outputFile = new FileWriter(file);
-            //CSVParser parser = new CSVParserBuilder()
-            //        .withSeparator(',')
-            //        .withIgnoreQuotations(false)
-            //        .build();
-            ICSVWriter writer = new CSVWriterBuilder(outputFile)
-                    //    .withParser(parser)
-                    .build();
+            ICSVWriter writer = new CSVWriterBuilder(outputFile).build();
             String[] header = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
             writer.writeNext(header);
             for (String[] array : stringArray) {
@@ -144,9 +143,12 @@ public class CsvUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * fetches list of String arrays containing valid data entries
+     * @return
+     */
     public List<String[]> getGoodEntries() {
         return goodEntries;
     }
@@ -155,6 +157,10 @@ public class CsvUtil {
         return csvFile;
     }
 
+    /**
+     * sets the file path to fetch the desired .csv file
+     * @param csvFile String containing desired filepath
+     */
     public void setCsvFile(String csvFile) {
         this.csvFile = csvFile;
         System.out.println(this.csvFile);
@@ -164,6 +170,10 @@ public class CsvUtil {
         return newCsvPath;
     }
 
+    /**
+     * sets the file path to drop new bad .csv file
+     * @param newCsvPath String containing desired filepath
+     */
     public void setnewCsvPath(String newCsvPath) {
         this.newCsvPath = newCsvPath;
         System.out.println(this.newCsvPath);
